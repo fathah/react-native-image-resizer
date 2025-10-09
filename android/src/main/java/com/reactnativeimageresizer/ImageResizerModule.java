@@ -78,7 +78,7 @@ public class ImageResizerModule extends ImageResizerSpec {
       path = new File(outputPath);
     }
 
-    File resizedImage = ImageResizer.saveImage(scaledImage, path, UUID.randomUUID().toString(), compressFormat, quality);
+    File resizedImage = ImageResizer.saveImageFile(scaledImage, path, UUID.randomUUID().toString(), compressFormat, quality);
     WritableMap response = Arguments.createMap();
 
     // If resizedImagePath is empty and this wasn't caught earlier, throw.

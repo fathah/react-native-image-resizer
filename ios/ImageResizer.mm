@@ -11,7 +11,7 @@
 #import "RCTImageLoader.h"
 #endif
 
-NSString *moduleName = @"ImageResizer";
+NSString *imageResizerModuleName = @"ImageResizer";
 
 @implementation ImageResizer
 
@@ -37,9 +37,9 @@ RCT_REMAP_METHOD(createResizedImage, uri:(NSString *)uri width:(double)width hei
             
             NSString* fullPath;
             @try {
-                fullPath = generateFilePath(extension, outputPath);
+                fullPath = generatePath(extension, outputPath);
             } @catch (NSException *exception) {
-                [NSException raise:moduleName format:@"Invalid output path."];
+                [NSException raise:imageResizerModuleName format:@"Invalid output path."];
             }
             
             RCTImageLoader *loader = [self.bridge moduleForName:@"ImageLoader" lazilyLoadIfNecessary:YES];
@@ -57,7 +57,7 @@ RCT_REMAP_METHOD(createResizedImage, uri:(NSString *)uri width:(double)width hei
                     reject([NSString stringWithFormat: @"%ld", (long)error.code], error.description, nil);
                     return;
                 }
-                NSDictionary * response =  transformImage(image, uri, [rotation integerValue], newSize, fullPath, format, (int)quality, [keepMeta boolValue], @{@"mode": mode, @"onlyScaleDown": [NSNumber numberWithBool:onlyScaleDown]});
+                NSDictionary * response =  transformImageFile(image, uri, [rotation integerValue], newSize, fullPath, format, (int)quality, [keepMeta boolValue], @{@"mode": mode, @"onlyScaleDown": [NSNumber numberWithBool:onlyScaleDown]});
                 resolve(response);
             }];
         } @catch (NSException *exception) {
@@ -69,7 +69,7 @@ RCT_REMAP_METHOD(createResizedImage, uri:(NSString *)uri width:(double)width hei
 
 
 
-bool saveImage(NSString * fullPath, UIImage * image, NSString * format, float quality, NSMutableDictionary *metadata)
+bool saveImageFile(NSString * fullPath, UIImage * image, NSString * format, float quality, NSMutableDictionary *metadata)
 {
     if(metadata == nil){
         NSData* data = nil;
@@ -130,7 +130,7 @@ bool saveImage(NSString * fullPath, UIImage * image, NSString * format, float qu
     }
 }
 
-NSString * generateFilePath(NSString * ext, NSString * outputPath)
+NSString * generatePath(NSString * ext, NSString * outputPath)
 {
     NSString* directory;
     
@@ -194,7 +194,7 @@ UIImage * rotateImageFile(UIImage *inputImage, float rotationDegrees)
     }
 }
 
-float getScaleForProportionalResize(CGSize theSize, CGSize intoSize, bool onlyScaleDown, bool maximize)
+float getScaleForProportionalResizing(CGSize theSize, CGSize intoSize, bool onlyScaleDown, bool maximize)
 {
     float    sx = theSize.width;
     float    sy = theSize.height;
@@ -230,7 +230,7 @@ float getScaleForProportionalResize(CGSize theSize, CGSize intoSize, bool onlySc
 // any :image scale factor.
 // The returned image is an unscaled image (scale = 1.0)
 // so no additional scaling math needs to be done to get its pixel dimensions
-UIImage* scaleImage (UIImage* image, CGSize toSize, NSString* mode, bool onlyScaleDown)
+UIImage* scaleImageFile (UIImage* image, CGSize toSize, NSString* mode, bool onlyScaleDown)
 {
     
     // Need to do scaling corrections
@@ -257,7 +257,7 @@ UIImage* scaleImage (UIImage* image, CGSize toSize, NSString* mode, bool onlySca
     } else {
         // Either "contain" (default) or "cover": preserve aspect ratio
         bool maximize = [mode isEqualToString:@"cover"];
-        float scale = getScaleForProportionalResize(imageSize, toSize, onlyScaleDown, maximize);
+        float scale = getScaleForProportionalResizing(imageSize, toSize, onlyScaleDown, maximize);
         newSize = CGSizeMake(roundf(imageSize.width * scale), roundf(imageSize.height * scale));
     }
     
@@ -335,7 +335,7 @@ NSMutableDictionary * getImageMetaData(NSString * path)
     }
 }
 
-NSDictionary * transformImage(UIImage *image,
+NSDictionary * transformImageFile(UIImage *image,
                               NSString * originalPath,
                               int rotation,
                               CGSize newSize,
@@ -346,19 +346,19 @@ NSDictionary * transformImage(UIImage *image,
                               NSDictionary* options)
 {
     if (image == nil) {
-        [NSException raise:moduleName format:@"Can't retrieve the file from the path."];
+        [NSException raise:imageResizerModuleName format:@"Can't retrieve the file from the path."];
     }
     
     // Rotate image if rotation is specified.
     if (0 != (int)rotation) {
         image = rotateImageFile(image, rotation);
         if (image == nil) {
-            [NSException raise:moduleName format:@"Can't rotate the image."];
+            [NSException raise:imageResizerModuleName format:@"Can't rotate the image."];
         }
     }
     
     // Do the resizing
-    UIImage * scaledImage = scaleImage(
+    UIImage * scaledImage = scaleImageFile(
                                        image,
                                        newSize,
                                        options[@"mode"],
@@ -366,7 +366,7 @@ NSDictionary * transformImage(UIImage *image,
                                        );
     
     if (scaledImage == nil) {
-        [NSException raise:moduleName format:@"Can't resize the image."];
+        [NSException raise:imageResizerModuleName format:@"Can't resize the image."];
     }
     
     
@@ -386,8 +386,8 @@ NSDictionary * transformImage(UIImage *image,
     }
     
     // Compress and save the image
-    if (!saveImage(fullPath, scaledImage, format, quality, metadata)) {
-        [NSException raise:moduleName format:@"Can't save the image. Check your compression format and your output path"];
+    if (!saveImageFile(fullPath, scaledImage, format, quality, metadata)) {
+        [NSException raise:imageResizerModuleName format:@"Can't save the image. Check your compression format and your output path"];
     }
     
     NSURL *fileUrl = [[NSURL alloc] initFileURLWithPath:fullPath];

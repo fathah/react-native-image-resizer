@@ -205,7 +205,7 @@ public class ImageResizer {
   /**
    * Save the given bitmap in a directory. Extension is automatically generated using the bitmap format.
    */
-  public static File saveImage(Bitmap bitmap, File saveDirectory, String fileName,
+  public static File saveImageFile(Bitmap bitmap, File saveDirectory, String fileName,
                                Bitmap.CompressFormat compressFormat, int quality)
     throws IOException {
     if (bitmap == null) {
