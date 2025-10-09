@@ -1,6 +1,6 @@
 {
-  "name": "@bam.tech/react-native-image-resizer",
-  "version": "3.0.11",
+  "name": "@fathah/react-native-image-resizer",
+  "version": "1.0.0",
   "description": "Rescale local images with React Native",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -50,21 +50,21 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bamlab/react-native-image-resizer.git"
+    "url": "git+https://github.com/fathah/react-native-image-resizer.git"
   },
   "author": "Florian Rival <florianr@bam.tech> (http://bam.tech)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bamlab/react-native-image-resizer/issues"
+    "url": "https://github.com/fathah/react-native-image-resizer/issues"
   },
-  "homepage": "https://github.com/bamlab/react-native-image-resizer#readme",
+  "homepage": "https://github.com/fathah/react-native-image-resizer#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "devDependencies": {
-    "@evilmartians/lefthook": "^1.2.2",
     "@commitlint/config-conventional": "^17.0.2",
+    "@evilmartians/lefthook": "^1.2.2",
     "@react-native-community/eslint-config": "^3.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",
@@ -94,7 +94,7 @@
   "engines": {
     "node": ">= 16.0.0"
   },
-  "packageManager": "^yarn@1.22.15",
+  "packageManager": "yarn@3.6.4",
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [

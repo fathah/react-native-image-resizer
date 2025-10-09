@@ -1,8 +1,5 @@
 # React Native Image Resizer
 
-> **⚠ Warning**
-> Since version 3.0.0 this library has been moved from `react-native-image-resizer` to `@bam.tech/react-native-image-resizer`
-
 ## Setup
 
 ### React Native >= 0.61
@@ -11,14 +8,7 @@ Since the version version `3.0.0` this package support the new architecture out 
 It also has retrocompatibility with the old one.
 
 ```
-yarn add @bam.tech/react-native-image-resizer
-cd ios && pod install
-```
-
-### React Native <= 0.60
-
-```
-yarn add react-native-image-resizer@1.1.0
+yarn add @fathah/react-native-image-resizer
 cd ios && pod install
 ```
 
@@ -33,7 +23,7 @@ Manual link information for Android: [Link](docs/android_manual_config.md)
 ## Usage example
 
 ```javascript
-import ImageResizer from '@bam.tech/react-native-image-resizer';
+import ImageResizer from '@fathah/react-native-image-resizer';
 
 ImageResizer.createResizedImage(
   path,
@@ -58,7 +48,7 @@ ImageResizer.createResizedImage(
 
 ### Sample app
 
-A basic, sample app is available in [the `example` folder](https://github.com/bamlab/react-native-image-resizer/tree/master/example). It uses the module to resize a photo from the Camera Roll.
+A basic, sample app is available in [the `example` folder](https://github.com/fathah/react-native-image-resizer/tree/master/example). It uses the module to resize a photo from the Camera Roll.
 
 ## API
 
@@ -100,9 +90,3 @@ The promise resolves with an object containing: `path`, `uri`, `name`, `size` (b
 
 - If you are using `@react-native-camera-roll/camera-roll` **with new architecture enabled this library is not going to work**. If you try to display an image with the `uri` of the library using `<Image />` you are going to have the following error: `No suitable image URL loader found for ph://...`. This error come from the ReactNative `ImageLoader`, which is the one we are currently using. Help/PR for solving this are welcome. Until then, we recommend using `react-native-image-picker`.
 - Image EXIF orientation are correctly handled on Android only, But not yet on IOS [#402](https://github.com/bamlab/react-native-image-resizer/issues/402).
-
-## 👉 About Bam
-
-We are a 100 people company developing and designing multiplatform applications with [React Native](https://www.bam.tech/agence-react-native-paris) using the Lean & Agile methodology. To get more information on the solutions that would suit your needs, feel free to get in touch by [email](mailto://contact@bam.tech) or through or [contact form](https://www.bam.tech/en/contact)!
-
-We will always answer you with pleasure 😁
