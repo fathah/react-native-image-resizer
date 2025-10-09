@@ -161,7 +161,7 @@ NSString * generateFilePath(NSString * ext, NSString * outputPath)
     return fullPath;
 }
 
-UIImage * rotateImage(UIImage *inputImage, float rotationDegrees)
+UIImage * rotateImageFile(UIImage *inputImage, float rotationDegrees)
 {
     
     // We want only fixed 0, 90, 180, 270 degree rotations.
@@ -269,7 +269,7 @@ UIImage* scaleImage (UIImage* image, CGSize toSize, NSString* mode, bool onlySca
 }
 
 // Returns the image's metadata, or nil if failed to retrieve it.
-NSMutableDictionary * getImageMeta(NSString * path)
+NSMutableDictionary * getImageMetaData(NSString * path)
 {
     if([path hasPrefix:@"assets-library"]) {
         
@@ -351,7 +351,7 @@ NSDictionary * transformImage(UIImage *image,
     
     // Rotate image if rotation is specified.
     if (0 != (int)rotation) {
-        image = rotateImage(image, rotation);
+        image = rotateImageFile(image, rotation);
         if (image == nil) {
             [NSException raise:moduleName format:@"Can't rotate the image."];
         }
@@ -376,7 +376,7 @@ NSDictionary * transformImage(UIImage *image,
     // to do this.
     if(keepMeta && [format isEqualToString:@"JPEG"]){
         
-        metadata = getImageMeta(originalPath);
+        metadata = getImageMetaData(originalPath);
         
         // remove orientation (since we fix it)
         // width/height meta is adjusted automatically

@@ -189,7 +189,7 @@ public class ImageResizer {
   /**
    * Rotate the specified bitmap with the given angle, in degrees.
    */
-  public static Bitmap rotateImage(Bitmap source, Matrix matrix, float angle)
+  public static Bitmap rotateImageFile(Bitmap source, Matrix matrix, float angle)
   {
     Bitmap retVal;
     matrix.postRotate(angle);
@@ -567,7 +567,7 @@ public class ImageResizer {
     // NOTE: This will "fix" the image using it's exif info if it is rotated as well.
     Bitmap rotatedImage = sourceImage;
     Matrix matrix = getOrientationMatrix(context, imageUri);
-    rotatedImage = ImageResizer.rotateImage(sourceImage, matrix, rotation);
+    rotatedImage = ImageResizer.rotateImageFile(sourceImage, matrix, rotation);
 
     if(rotatedImage == null){
       throw new IOException("Unable to rotate image. Most likely due to not enough memory.");
