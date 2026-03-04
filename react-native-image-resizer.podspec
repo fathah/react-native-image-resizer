@@ -12,9 +12,11 @@ Pod::Spec.new do |s|
   s.authors      = package["author"]
 
   s.platforms    = { :ios => "10.0" }
-  s.source       = { :git => "https://github.com/taboulot/react-native-image-resizer.git", :tag => "#{s.version}" }
+  s.source       = { :git => "https://github.com/fathah/react-native-image-resizer.git", :tag => "#{s.version}" }
 
-  s.source_files = "ios/**/*.{h,m,mm}"
+  s.source_files = "ios/**/*.{h,m,mm,swift}"
+  s.swift_version = '5.0'
+
 
   s.ios.framework = 'AssetsLibrary', 'MobileCoreServices'
 
@@ -27,7 +29,9 @@ Pod::Spec.new do |s|
         "CLANG_CXX_LANGUAGE_STANDARD" => "c++17"
     }
     s.dependency "React-Codegen"
-    s.dependency "RCT-Folly"
+    if ENV['RCT_USE_PREBUILT_RNCORE'] != '1' then
+      s.dependency "RCT-Folly"
+    end
     s.dependency "RCTRequired"
     s.dependency "RCTTypeSafety"
     s.dependency "ReactCommon/turbomodule/core"

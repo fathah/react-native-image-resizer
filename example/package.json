@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@react-native-camera-roll/camera-roll": "^5.7.2",
-    "react": "18.2.0",
-    "react-native": "0.71.8",
+    "react": "18.3.1",
+    "react-native": "0.84.0",
     "react-native-image-picker": "^4.8.4",
     "react-native-vision-camera": "^2.15.6"
   },
@@ -19,6 +19,7 @@
     "@babel/core": "^7.20.0",
     "@babel/preset-env": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@react-native-community/cli": "^20.1.1",
     "babel-plugin-module-resolver": "^4.1.0",
     "metro-react-native-babel-preset": "0.73.9"
   }
